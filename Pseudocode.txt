@@ -1,0 +1,121 @@
+User(age : Int(min : 16, max : 40), 
+username : String, 
+password : String, 
+interests : List<Interests>[10] from allinterests){
+
+    var likedUsers : MutableList<User>
+    var dislikedUsers : MutableList<User>
+
+    fun addtoLikedlist(user : User){
+        likedUsers.add(user)
+    }
+    fun addtoDislikedlist(user : User){
+        dislikedUsers.add(user)
+    }
+}
+
+const allInterests : List<String> = [
+“football”,”music”,”guitar”,”programming”, “city”,”village”,”travell”,”asia”, ... ]
+
+Topic{
+
+    var allTopics = [“ecology”, “hobbie”, ”school”, ”greeting”,    ”languages” ...]
+
+    fun generateTopic() : String = allTopics.Random
+
+    fun generateWords(topic : String) : List<String> {
+        
+        // DataMuse API - searches in the API for words and saves them in a list
+//example: topic : school -> Wörter aus der API : book, pen, teacher, math, grade, scholarship,.... 
+    }
+}
+SearchingMachine( user1 : User){
+    
+    listOfActiveUsers : List<User> = [benjamin1, ivana, jordan, ...]
+ 
+    fun getFellow() : User{
+ 
+        var fellow : User
+ 
+        //searching a matching fellow
+ 
+        //Eine Liste mit den gefallenen Benutzer filtrieren.
+        var likedAndActiveUsers = listOfActiveUsers.filter(user1.likedUsers)
+    
+        //Wenn Liste nicht leer ist, einer davon zufällig wählen.
+        if(likedAndActiveUsers.isEmpty() == false)  fellow = likedAndActiveUsers.Random
+        else {
+ 
+            //Wenn Liste leer ist, zweite Liste mit Benutzer mit 3 gleiche Interessen generieren.
+            var activeAndSimilarInterests : MutableList<Users> = listOfActiveUsers.filter{ user -> 3 user.interests == user1.interests && user is not in user1.dislikedUsers }
+            //Wenn zweite Liste nicht leer ist, einer davon zufällig wählen
+            if(activeAndSimilarInterests.isEmpty() == false) fellow = activeAndSimilarInterests.Random
+            else{
+                //Wenn zweite Liste leer ist, eine dritte Liste mit aktiven Benutzern und ohne die schlecht-bewertete-Benutzer-Liste
+                var activeAndNotDisliked : List<User> = listOfActiveUsers.filter{user -> user not in user1.dislikedUsers}
+                //Wenn dritte Liste nicht leer ist, einer davon zufällig wählen
+                if(activeAndNotDisliked.isEmpty() == false) fellow = activeAndNotDisliked.Random
+                else{
+                    //Wenn dritte Liste auch leer ist, Fehlermeldung ausgeben
+                    print("Sorry, we couldn't find matching Fellow, try again after some minutes")
+                    break;
+                }
+            }
+        }
+        return fellow;
+    }
+ 
+    fun getMission() : Array<String>[4]  {
+        //generating a topic
+        var mission : Array<String>[4] 
+        mission[0]= Topic.generateTopic()
+ 
+        //generating a mission with 3 words
+        var words : List<String> = Topic.generateWords(generatedTopic)
+ 
+        for( i in 1..4){
+            mission[i] = words.Random
+        }
+        return mission
+    }
+}
+Room (user1 : User ){
+ 
+    fun getMision{ 
+ 
+        var searching = SearchingMachine(user1)
+        var fellow : User = searching.getFellow()
+        var topic : Array<String> = searching.getMission()
+        topic[0]
+    }
+    fun startMission(){
+ 
+	  // API - Telefonat starten
+        var missionWords : Array<String> =  topic[from 1 until 4]
+        var timer = Countdown(15 min)
+    
+        // API - Übersetzer
+        // Idee - API - Wörterbuch
+    
+        var panicButton = Button()
+ 
+        if(panicButton.Pressed() == true){
+            timer - (3 min)
+            panicButton.Pressed() = false
+        }
+        when (time == 00){
+            //API- Speechrecognition speichert den Gespräch in txt format 
+            // API - vergleicht die Wörter zu dem Thema aus dem DataMuse API mit den Wörtern die von der Speachrecognition gespeichert wurdenshow
+ 
+//Resultat bewerten:
+//wenn die 3 Wörter aus der Mission verwendet wurden       
+-> success
+//wenn alle 3 Wörter aus der Mission nicht verwendet wurden 
+-> no success
+//wenn die 3 Wörter plus andere aus der Liste verwendet wurden 
+-> best result
+ 
+//den Speakfellow bewerten und ihn in die entsprechende Liste    hinzufügen
+        }
+    }
+}
