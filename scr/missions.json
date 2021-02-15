@@ -1,0 +1,76 @@
+[
+  {
+    "id": "3",
+    "topic": "palestine",
+    "words": [
+      "israel",
+      "iraq",
+      "arabic",
+      "immigration",
+      "israel"
+    ],
+    "user1": {
+      "id": "3",
+      "username": "Achelia",
+      "age": "20",
+      "status": "online",
+      "interests": [
+        "football",
+        "goats",
+        "dogs",
+        "cats",
+        "drinks"
+      ]
+    },
+    "user2": {
+      "id": "4",
+      "username": "Test",
+      "age": "20",
+      "status": "online",
+      "interests": [
+        "travelling",
+        "goats",
+        "dogs",
+        "books",
+        "drinks"
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "topic": "humans",
+    "words": [
+      "rats",
+      "enzyme",
+      "aliens",
+      "planet",
+      "symptoms"
+    ],
+    "user1": {
+      "id": "4",
+      "username": "Test",
+      "age": "20",
+      "status": "online",
+      "interests": [
+        "travelling",
+        "goats",
+        "dogs",
+        "books",
+        "drinks"
+      ]
+    },
+    "user2": {
+      "id": "3",
+      "username": "Achelia",
+      "age": "20",
+      "status": "online",
+      "interests": [
+        "football",
+        "goats",
+        "dogs",
+        "cats",
+        "drinks"
+      ]
+    }
+  }
+]
