@@ -1,0 +1,67 @@
+[
+  {
+    "id": "1",
+    "username": "Beyza",
+    "age": "19",
+    "status": "online",
+    "interests": [
+      "books",
+      "Harry Poter",
+      "travelling",
+      "languages",
+      "goats"
+    ]
+  },
+  {
+    "id": "2",
+    "username": "Esra",
+    "age": "19",
+    "status": "online",
+    "interests": [
+      "books",
+      "cats",
+      "goats",
+      "Harry Poter",
+      "Mary Poppins"
+    ]
+  },
+  {
+    "id": "3",
+    "username": "Achelia",
+    "age": "20",
+    "status": "online",
+    "interests": [
+      "football",
+      "goats",
+      "dogs",
+      "cats",
+      "drinks"
+    ]
+  },
+  {
+    "id": "4",
+    "username": "Test",
+    "age": "20",
+    "status": "online",
+    "interests": [
+      "travelling",
+      "goats",
+      "dogs",
+      "books",
+      "drinks"
+    ]
+  },
+  {
+    "id": "5",
+    "username": "Maria",
+    "age": "20",
+    "status": "online",
+    "interests": [
+      "football",
+      "politics",
+      "chocolate",
+      "university",
+      "goats"
+    ]
+  }
+]
