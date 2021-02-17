@@ -149,6 +149,16 @@ app.post('/missions', (req, res) => {
             matches.push(users[u]);
     }
 
+    //if the are no matched Users
+    if (matches.length <= 0) res.status(404).send( "No match Users found, try later!");
+
+    //else choose one match randomly
+    const match = matches[Math.floor(Math.random() * matches.length)];
+    //find our common interests again
+    const interests = commonInterests(user, match);
+    //choose a word from our common interests as topic
+    const topic = interests[Math.floor(Math.random() * interests.length)];
+
         
         
 //rooms - Achelia
