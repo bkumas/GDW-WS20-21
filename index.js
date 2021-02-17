@@ -317,3 +317,114 @@ app.delete('/rooms/:id', (req, res) => {
 
         
 //results - Achelia
+app.get('/results', (req, res) => {
+    let results = JSON.parse(fs.readFileSync('results.json'));
+    res.send(results);
+});
+
+app.get('/results/:id', (req, res) => {
+    let results = JSON.parse(fs.readFileSync('results.json'));
+    const result = results.find(u => parseInt(u.id) === parseInt(req.params.id));
+    if (!result) res.status(404).send("ID of Result is not found");
+    res.send(result);
+});
+
+//for update
+app.post('/results',(req,res)=>{
+
+
+    const schema = Joi.object({
+        "id": Joi.string().required(),
+        "words_input": Joi.array().required()
+    });
+
+    const schema_result = schema.validate(req.body)
+    if (schema_result.error) {
+        res.status(400).send(schema_result.error.details[0].message)
+        return
+    }
+
+    const fs = require('fs');
+    const datamuse = require('datamuse');
+
+    let missions = JSON.parse(fs.readFileSync('missions.json'));
+    let results = JSON.parse(fs.readFileSync('results.json'));
+
+    const result = results.find(u => parseInt(u.id) === parseInt(req.body.id));
+
+    // const words_input_lowerCase = req.body.words_input.map(w => w.toLowerCase());
+    const words_input_lowerCase = req.body.words_input.map(w => w.toLowerCase());
+
+    const mission_id = parseInt(result.missionID);
+    console.log(mission_id);
+    const mission = missions.find(u => parseInt(u.id) === mission_id);
+    if (!mission)  res.status(404).send("ID of Mission is not found");
+    let words_required = mission.words;
+
+    datamuse.request('/words?rel_trg=' + mission.topic).then((datajson) => {
+        const words_topic_all = JSON.parse(JSON.stringify(datajson)).map(i => i.word);
+
+        //get all used words from the required words of the mission
+        let words_required_res = [];
+        for (let w in words_required) {
+            if (words_input_lowerCase.includes(words_required[w])) words_required_res.push(words_required[w]);
+        }
+        console.log("words_required_res : " + words_required_res);
+
+        //extract the required words of the mission from the whole set of words, associated with the topic
+        const words_topic_all_minus = words_topic_all.filter(val => !words_required.includes(val));
+
+        //get all used words from the whole set of words, associated with the topic
+        let words_bonus = [];
+        for (let w in words_topic_all_minus) {
+            if (words_input_lowerCase.includes(words_topic_all_minus[w])) words_bonus.push(words_topic_all_minus[w]);
+        }
+        console.log("words_bonus: " + words_bonus);
+
+        //calculate Points!
+        let points = 0;
+        if (words_required_res.length > 0) points = words_required_res.length * 20;
+
+        //calculate Bonus!
+        let bonus = 0;
+        if (words_bonus.length > 0) bonus = words_bonus.length * 10;
+
+        let resultNew =  {
+            "id": result.id,
+            "userID": result.userID,
+            "missionID": result.missionID,
+            "words_input" : words_input_lowerCase,
+            "points": points,
+            "bonus": bonus,
+            "total": (points + bonus),
+            "words_req": words_required_res,
+            "words_bonus": words_bonus,
+            "motivation_words": words_topic_all_minus
+        }
+        const index = results.indexOf(result);
+        results.splice(index, 1);
+
+        // //push the new and update the file
+        results.push(resultNew);
+        rewriteFile('results.json', results);
+
+        res.location(`results/${result.id}`)
+        res.send(resultNew);
+    });
+
+    // res.location(`results/${req.body.id}`);
+    // res.send("result/evaluation created");
+});
+
+app.delete('/results/:id', (req, res) => {
+    let results = JSON.parse(fs.readFileSync('results.json'));
+    const result = results.find(u => parseInt(u.id) === parseInt(req.params.id));
+    if (!result) res.status(404).send("ID of Result is not found");
+
+    const index = results.indexOf(result);
+    results.splice(index, 1);
+
+    rewriteFile("results.json", results);
+    res.send(result);
+
+});
