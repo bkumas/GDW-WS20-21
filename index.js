@@ -81,6 +81,10 @@ app.put('/users/:id', (req, res) => {
     if (req.body.interests) user.interests = req.body.interests;
     if(req.body.status) user.status = req.body.status;
     
+        rewriteFile("users.json", users);
+    res.send(user);
+})
+    
 //missions - Beyza
 //rooms - Achelia
 //results - Achelia
