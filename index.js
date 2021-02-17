@@ -173,6 +173,25 @@ app.post('/missions', (req, res) => {
         datamuse.request('/words?rel_trg=' + topic2.word).then((datajson_level2) => {
             let words_level2 = JSON.parse(JSON.stringify(datajson_level2));
         
+            //get 5 words randomly from the associated words with topic2
+            let mission_words_level2 = [];
+            for (let i = 0; i < 5; i++) {
+                let random = Math.floor(Math.random() * words_level2.length);
+                mission_words_level2.push(words_level2[random].word);
+            }
+
+            //create a new mission
+            let newMission = {
+                "id": newMissionID,
+                "topic": topic2.word,
+                "words": mission_words_level2,
+                "user1": user,
+                "user2": match
+            }
+            missions.push(newMission);
+            rewriteFile('missions.json', missions);
+        })
+    });
         
 //rooms - Achelia
         
