@@ -137,18 +137,46 @@ app.post('/missions', (req, res) => {
     for (let m in missions) {
         if(presentMission < missions[m].id)
         presentMission = missions[m].id;
- }
-    let newMissionID = parseInt(presentMission) + 1;
-
-    //search User matches
-    let matches = [];
-    for (const u in users) {
-        //find users with min 3 common interests as me
-        let listOfInterests = commonInterests(user, users[u])
-        if (users[u] !== user && listOfInterests !== null && users[u].status === "online")
-            matches.push(users[u]);
-    }
-    
+        
         
 //rooms - Achelia
+        
+        app.get('/rooms', (req, res) => {
+    let rooms = JSON.parse(fs.readFileSync('rooms.json'));
+    res.send(rooms);
+});
+
+app.get('/rooms/:id', (req, res) => {
+    let results = JSON.parse(fs.readFileSync('results.json'));
+    let rooms = JSON.parse(fs.readFileSync('rooms.json'));
+
+    let room = rooms.find(r => parseInt(r.id) === parseInt(req.params.id));
+    if (!room) res.status(404).send("Room with such ID does not exist.");
+
+
+    //new result node should be created
+    //new result node should be created
+    let presentResult = 0;
+    for (let r in results) {
+        if(presentResult < results[r].id)
+            presentResult = results[r].id;
+    }
+    //update the result parameter in json file with a valid result id
+    const newResultsID = parseInt(presentResult) + 1;
+
+    room.links[0].href = `/results/${newResultsID}`;
+    console.log(room.links[0].href);
+    let newResult = {
+        "id" : newResultsID,
+        "userID": room.userID,
+        "missionID": room.missionID
+    };
+
+    results.push(newResult);
+    rewriteFile('rooms.json', rooms);
+    rewriteFile('results.json', results);
+
+    res.send(room);
+
+});
 //results - Achelia
