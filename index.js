@@ -89,6 +89,10 @@ app.delete('/users/:id', (req, res) => {
     let users = JSON.parse(fs.readFileSync('users.json'));
     const user = users.find(u => parseInt(u.id) === parseInt(req.params.id));
     if (!user) res.status(404).send("ID of User is not found");
+    
+    //delete user
+    const index = users.indexOf(user);
+    users.splice(index, 1);
 
     
 //missions - Beyza
