@@ -39,6 +39,14 @@ app.post('/users', (req, res) => {
         presentUser = users[u].id;
     }
 
+        //create
+    const newUser = {
+        "id": `${parseInt(presentUser) + 1}`,
+        "username": req.body.username,
+        "age": req.body.age,
+        "status": "online",
+        "interests": req.body.interests,
+    };
 //missions - Beyza
 //rooms - Achelia
 //results - Achelia
