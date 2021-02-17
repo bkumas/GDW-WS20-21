@@ -47,6 +47,14 @@ app.post('/users', (req, res) => {
         "status": "online",
         "interests": req.body.interests,
     };
+    
+        users.push(newUser);
+    rewriteFile("users.json", users);
+
+    res.location(`/users/${parseInt(presentUser) + 1}`);
+    res.send(newUser);
+});
+
 //missions - Beyza
 //rooms - Achelia
 //results - Achelia
