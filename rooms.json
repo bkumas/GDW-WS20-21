@@ -1,0 +1,13 @@
+[
+  {
+    "id": "1",
+    "userID": "3",
+    "missionID": "1",
+    "links": [
+      {
+        "rel": "result",
+        "href": "/results/1"
+      }
+    ]
+  }
+]
