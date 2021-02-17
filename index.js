@@ -18,6 +18,15 @@ app.get('/users/:id', (req, res) => {
     res.send(user)
 });
 
+app.post('/users', (req, res) => {
+    let users = JSON.parse(fs.readFileSync('users.json'));
+    //validate
+    const schema = Joi.object({
+        "username": Joi.string().min(3).required(),
+        "age": Joi.number().required().greater(16).less(40),
+        "interests": Joi.array().min(5).max(15).required()
+    });
+
 //missions - Beyza
 //rooms - Achelia
 //results - Achelia
