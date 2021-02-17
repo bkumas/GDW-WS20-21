@@ -132,7 +132,6 @@ app.post('/missions', (req, res) => {
     const user = users.find(u => parseInt(u.id) === parseInt(req.body.userID));
     if (!user) res.status(404).send("ID of User is not found");
 
-    //should change
     let presentMission = 0;
     for (let m in missions) {
         if(presentMission < missions[m].id)
@@ -212,7 +211,7 @@ app.delete('/missions/:id', (req, res) => {
 });     
 //rooms - Achelia
         
-        app.get('/rooms', (req, res) => {
+app.get('/rooms', (req, res) => {
     let rooms = JSON.parse(fs.readFileSync('rooms.json'));
     res.send(rooms);
 });
@@ -250,5 +249,71 @@ app.get('/rooms/:id', (req, res) => {
     res.send(room);
 
 });
+
+
+app.post('/rooms', (req, res) => {
+
+    let rooms = JSON.parse(fs.readFileSync('rooms.json'));
+    let users = JSON.parse(fs.readFileSync('users.json'));
+    let missions = JSON.parse(fs.readFileSync('missions.json'));
+    //validate
+    const schema = Joi.object({
+        "userID": Joi.string().required(),
+        "missionID": Joi.string().required(),
+    });
+
+    const schema_result = schema.validate(req.body)
+    if (schema_result.error) {
+        res.status(400).send(schema_result.error.details[0].message)
+        return
+    }
+
+    const user = users.find(u => parseInt(u.id) === parseInt(req.body.userID));
+    if (!user) res.status(404).send("User can not be found!");
+
+    const mission = missions.find(u => parseInt(u.id) === parseInt(req.body.missionID));
+    if (!mission) res.status(404).send("Mission can not be found!");
+
+    if(parseInt(req.body.userID) !== parseInt(mission.user1.id) &&  parseInt(req.body.userID)!==parseInt(mission.user2.id) ) {
+        res.status(404).send("This user cannot access this room.");
+    }
+
+    let presentRoom = 0;
+    for (let r in rooms) {
+        if(presentRoom < rooms[r].id)
+        presentRoom = rooms[r].id;
+    }
+
+    let newRoom = {
+        "id": `${parseInt(presentRoom) + 1}`,
+        "userID": req.body.userID,
+        "missionID": req.body.missionID,
+        "links": [
+            {
+                "rel": "result",
+                "href": `/results/`
+            }
+        ]
+    }
+    rooms.push(newRoom);
+    rewriteFile("rooms.json", rooms);
+
+    res.location(`/rooms/${parseInt(presentRoom) + 1}`);
+    res.send(newRoom);
+});
+
+app.delete('/rooms/:id', (req, res) => {
+    let rooms = JSON.parse(fs.readFileSync('rooms.json'));
+    const room = rooms.find(u => parseInt(u.id) === parseInt(req.params.id));
+    if (!room) res.status(404).send("ID of Room is not found");
+
+    //delete
+    const index = rooms.indexOf(room);
+    rooms.splice(index, 1);
+
+    rewriteFile("rooms.json", rooms);
+    res.send(room);
+});
+
         
 //results - Achelia
