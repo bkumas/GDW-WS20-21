@@ -100,5 +100,117 @@ app.delete('/users/:id', (req, res) => {
 
     
 //missions - Beyza
+
+app.get('/missions', (req, res) => {
+    let missions = JSON.parse(fs.readFileSync('missions.json'));
+    res.send(missions);
+});
+
+app.get('/missions/:id', (req, res) => {
+    let missions = JSON.parse(fs.readFileSync('missions.json'));
+    const mission = missions.find(r => parseInt(r.id) === parseInt(req.params.id));
+    if (!mission) res.status(404).send("Mission with such ID does not exist.");
+    res.send(mission);
+});
+
+app.post('/missions', (req, res) => {
+
+    //validate
+    const schema = Joi.object({
+        "userID": Joi.string().required(),
+    });
+    const schema_result= schema.validate(req.body)
+    if (schema_result.error) {
+        res.status(400).send(schema_result.error.details[0].message)
+        return
+    }
+
+    const fs = require('fs');
+    const datamuse = require('datamuse');
+
+    let users = JSON.parse(fs.readFileSync('users.json'));
+    let missions = JSON.parse(fs.readFileSync('missions.json'));
+    const user = users.find(u => parseInt(u.id) === parseInt(req.body.userID));
+    if (!user) res.status(404).send("ID of User is not found");
+
+    //should change
+    let presentMission = 0;
+    for (let m in missions) {
+        if(presentMission < missions[m].id)
+        presentMission = missions[m].id;
+    }
+    let newMissionID = parseInt(presentMission) + 1;
+
+    //search User matches
+    let matches = [];
+    for (const u in users) {
+        //find users with min 3 common interests as me
+        let listOfInterests = commonInterests(user, users[u])
+        if (users[u] !== user && listOfInterests !== null && users[u].status === "online")
+            matches.push(users[u]);
+    }
+
+    //if the are no matched Users
+    if (matches.length <= 0) res.status(404).send( "No match Users found, try later!");
+
+    //else choose one match randomly
+    const match = matches[Math.floor(Math.random() * matches.length)];
+    //find our common interests again
+    const interests = commonInterests(user, match);
+    //choose a word from our common interests as topic
+    const topic = interests[Math.floor(Math.random() * interests.length)];
+
+    //generate a topic(word) from second level associated words
+    //level1
+    datamuse.request('/words?rel_trg=' + topic).then((datajson) => {
+        let words_level1 = JSON.parse(JSON.stringify(datajson));
+
+        //choose one word randomly from the associated words with the topic
+        let random = Math.floor(Math.random() * words_level1.length);
+        let topic2 = words_level1[random];
+
+        //search for associated words with the topic2 (from second level)
+        //topic2 becomes our main topic for the mission
+        datamuse.request('/words?rel_trg=' + topic2.word).then((datajson_level2) => {
+            let words_level2 = JSON.parse(JSON.stringify(datajson_level2));
+
+            //get 5 words randomly from the associated words with topic2
+            let mission_words_level2 = [];
+            for (let i = 0; i < 5; i++) {
+                let random = Math.floor(Math.random() * words_level2.length);
+                mission_words_level2.push(words_level2[random].word);
+            }
+
+            //create a new mission
+            let newMission = {
+                "id": newMissionID,
+                "topic": topic2.word,
+                "words": mission_words_level2,
+                "user1": user,
+                "user2": match
+            }
+            missions.push(newMission);
+            rewriteFile('missions.json', missions);
+        })
+    });
+    //return the ID of the new Mission
+    res.location(`/missions/${newMissionID}`);
+    res.send("New Mission created");
+
+});
+
+app.delete('/missions/:id', (req, res) => {
+    let missions = JSON.parse(fs.readFileSync('missions.json'));
+    const mission = missions.find(u => parseInt(u.id) === parseInt(req.params.id));
+    if (!mission) res.status(404).send("ID of Mission is not found");
+
+    //delete user
+    const index = missions.indexOf(mission);
+    missions.splice(index, 1);
+
+    rewriteFile("missions.json", missions);
+    res.send(mission);
+});
+
 //rooms - Achelia
 //results - Achelia
