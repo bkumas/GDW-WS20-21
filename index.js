@@ -31,7 +31,13 @@ app.post('/users', (req, res) => {
     if (schema_result.error) {
         res.status(400).send(schema_result.error.details[0].message)
         return
-    }   
+    }
+    
+        let presentUser = 0;
+    for (let u in users) {
+        if(presentUser < users[u].id)
+        presentUser = users[u].id;
+    }
 
 //missions - Beyza
 //rooms - Achelia
