@@ -223,7 +223,6 @@ app.get('/rooms/:id', (req, res) => {
     let room = rooms.find(r => parseInt(r.id) === parseInt(req.params.id));
     if (!room) res.status(404).send("Room with such ID does not exist.");
 
-
     //new result node should be created
     //new result node should be created
     let presentResult = 0;
@@ -249,7 +248,6 @@ app.get('/rooms/:id', (req, res) => {
     res.send(room);
 
 });
-
 
 app.post('/rooms', (req, res) => {
 
@@ -314,8 +312,7 @@ app.delete('/rooms/:id', (req, res) => {
     rewriteFile("rooms.json", rooms);
     res.send(room);
 });
-
-        
+    
 //results - Achelia
 app.get('/results', (req, res) => {
     let results = JSON.parse(fs.readFileSync('results.json'));
@@ -331,7 +328,6 @@ app.get('/results/:id', (req, res) => {
 
 //for update
 app.post('/results',(req,res)=>{
-
 
     const schema = Joi.object({
         "id": Joi.string().required(),
