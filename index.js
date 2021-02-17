@@ -192,7 +192,24 @@ app.post('/missions', (req, res) => {
             rewriteFile('missions.json', missions);
         })
     });
-        
+    //return the ID of the new Mission
+    res.location(`/missions/${newMissionID}`);
+    res.send("New Mission created");
+
+});
+
+app.delete('/missions/:id', (req, res) => {
+    let missions = JSON.parse(fs.readFileSync('missions.json'));
+    const mission = missions.find(u => parseInt(u.id) === parseInt(req.params.id));
+    if (!mission) res.status(404).send("ID of Mission is not found");
+
+    //delete user
+    const index = missions.indexOf(mission);
+    missions.splice(index, 1);
+
+    rewriteFile("missions.json", missions);
+    res.send(mission);
+});     
 //rooms - Achelia
         
         app.get('/rooms', (req, res) => {
