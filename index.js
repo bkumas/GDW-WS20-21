@@ -60,6 +60,14 @@ app.put('/users/:id', (req, res) => {
 
     const user = users.find(u => parseInt(u.id) === parseInt(req.params.id));
     if (!user) res.status(404).send("ID of user is not found");
+    
+        //validate
+    const schema = Joi.object({
+        "username": Joi.string().min(3),
+        "age": Joi.number(),
+        "status" : Joi.string().valid("online", "offline"),
+        "interests": Joi.array().min(5).max(15),
+    });
 
 //missions - Beyza
 //rooms - Achelia
