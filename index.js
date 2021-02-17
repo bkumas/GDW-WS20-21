@@ -26,6 +26,12 @@ app.post('/users', (req, res) => {
         "age": Joi.number().required().greater(16).less(40),
         "interests": Joi.array().min(5).max(15).required()
     });
+    
+     const schema_result = schema.validate(req.body)
+    if (schema_result.error) {
+        res.status(400).send(schema_result.error.details[0].message)
+        return
+    }   
 
 //missions - Beyza
 //rooms - Achelia
