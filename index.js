@@ -93,6 +93,10 @@ app.delete('/users/:id', (req, res) => {
     //delete user
     const index = users.indexOf(user);
     users.splice(index, 1);
+    
+        rewriteFile("users.json", users);
+    res.send(user);
+});
 
     
 //missions - Beyza
