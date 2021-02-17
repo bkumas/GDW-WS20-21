@@ -435,3 +435,18 @@ function rewriteFile(file, object, callback) {
     if (typeof callback == "function")
         callback();
 }
+//compare users' interests
+function commonInterests(user1, user2) {
+    let list = [];
+    for (let i = 0; i < user1.interests.length; i++)
+        for (let p = 0; p < user2.interests.length; p++) {
+            if (user1.interests[i] === user2.interests[p])
+                list.push(user1.interests[i])
+        }
+    if (list.length >= 3) return list
+    else return null;
+}
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Listening on port ${port}...`));
+
