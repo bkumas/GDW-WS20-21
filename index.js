@@ -97,13 +97,19 @@ app.delete('/users/:id', (req, res) => {
         rewriteFile("users.json", users);
     res.send(user);
 });
-
-    
+  
 //missions - Beyza
 
 app.get('/missions', (req, res) => {
     let missions = JSON.parse(fs.readFileSync('missions.json'));
     res.send(missions);
+});
+
+app.get('/missions/:id', (req, res) => {
+    let missions = JSON.parse(fs.readFileSync('missions.json'));
+    const mission = missions.find(r => parseInt(r.id) === parseInt(req.params.id));
+    if (!mission) res.status(404).send("Mission with such ID does not exist.");
+    res.send(mission);
 });
 
 
