@@ -112,6 +112,17 @@ app.get('/missions/:id', (req, res) => {
     res.send(mission);
 });
 
+app.post('/missions', (req, res) => {
+
+    //validate
+    const schema = Joi.object({
+        "userID": Joi.string().required(),
+    });
+    const schema_result= schema.validate(req.body)
+    if (schema_result.error) {
+        res.status(400).send(schema_result.error.details[0].message)
+        return
+    }
 
 //rooms - Achelia
 //results - Achelia
