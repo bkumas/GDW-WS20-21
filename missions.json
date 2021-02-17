@@ -1,0 +1,39 @@
+[
+  {
+    "id": "1",
+    "topic": "palestine",
+    "words": [
+      "israel",
+      "iraq",
+      "arabic",
+      "immigration",
+      "olives"
+    ],
+    "user1": {
+      "id": "3",
+      "username": "Achelia",
+      "age": "20",
+      "status": "online",
+      "interests": [
+        "football",
+        "goats",
+        "dogs",
+        "cats",
+        "drinks"
+      ]
+    },
+    "user2": {
+      "id": "4",
+      "username": "Test",
+      "age": "20",
+      "status": "online",
+      "interests": [
+        "travelling",
+        "goats",
+        "dogs",
+        "books",
+        "drinks"
+      ]
+    }
+  }
+]
