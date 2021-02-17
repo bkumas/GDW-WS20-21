@@ -148,7 +148,7 @@ app.post('/missions', (req, res) => {
             matches.push(users[u]);
     }
 
-    //if the are no matched Users
+    //if there are no matched Users
     if (matches.length <= 0) res.status(404).send( "No match Users found, try later!");
 
     //else choose one match randomly
