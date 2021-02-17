@@ -75,6 +75,12 @@ app.put('/users/:id', (req, res) => {
         return
     }    
 
+        //update
+    if (req.body.username) user.username = req.body.username;
+    if (req.body.age) user.age = req.body.age;
+    if (req.body.interests) user.interests = req.body.interests;
+    if(req.body.status) user.status = req.body.status;
+    
 //missions - Beyza
 //rooms - Achelia
 //results - Achelia
