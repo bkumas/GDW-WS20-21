@@ -159,6 +159,19 @@ app.post('/missions', (req, res) => {
     //choose a word from our common interests as topic
     const topic = interests[Math.floor(Math.random() * interests.length)];
 
+     //generate a topic(word) from second level associated words
+    //level1
+    datamuse.request('/words?rel_trg=' + topic).then((datajson) => {
+        let words_level1 = JSON.parse(JSON.stringify(datajson));
+
+        //choose one word randomly from the associated words with the topic
+        let random = Math.floor(Math.random() * words_level1.length);
+        let topic2 = words_level1[random];
+
+        //search for associated words with the topic2 (from second level)
+        //topic2 becomes our main topic for the mission
+        datamuse.request('/words?rel_trg=' + topic2.word).then((datajson_level2) => {
+            let words_level2 = JSON.parse(JSON.stringify(datajson_level2));
         
         
 //rooms - Achelia
