@@ -428,3 +428,14 @@ app.delete('/results/:id', (req, res) => {
     res.send(result);
 
 });
+
+function rewriteFile(file, object, callback) {
+    const fs = require('fs');
+    fs.writeFile(file, JSON.stringify(object), function (err) {
+            if (err) throw err;
+            console.log(`File updated`);
+        }
+    )
+    if (typeof callback == "function")
+        callback();
+}
