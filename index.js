@@ -68,6 +68,12 @@ app.put('/users/:id', (req, res) => {
         "status" : Joi.string().valid("online", "offline"),
         "interests": Joi.array().min(5).max(15),
     });
+    
+    const schema_result= schema.validate(req.body)
+    if (schema_result.error) {
+        res.status(400).send(schema_result.error.details[0].message)
+        return
+    }    
 
 //missions - Beyza
 //rooms - Achelia
