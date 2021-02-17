@@ -124,5 +124,20 @@ app.post('/missions', (req, res) => {
         return
     }
 
+    const fs = require('fs');
+    const datamuse = require('datamuse');
+
+    let users = JSON.parse(fs.readFileSync('users.json'));
+    let missions = JSON.parse(fs.readFileSync('missions.json'));
+    const user = users.find(u => parseInt(u.id) === parseInt(req.body.userID));
+    if (!user) res.status(404).send("ID of User is not found");
+
+    //should change
+    let presentMission = 0;
+    for (let m in missions) {
+        if(presentMission < missions[m].id)
+        presentMission = missions[m].id;
+        
+        
 //rooms - Achelia
 //results - Achelia
