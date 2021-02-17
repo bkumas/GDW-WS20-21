@@ -137,7 +137,18 @@ app.post('/missions', (req, res) => {
     for (let m in missions) {
         if(presentMission < missions[m].id)
         presentMission = missions[m].id;
-        
+ }
+    let newMissionID = parseInt(presentMission) + 1;
+
+    //search User matches
+    let matches = [];
+    for (const u in users) {
+        //find users with min 3 common interests as me
+        let listOfInterests = commonInterests(user, users[u])
+        if (users[u] !== user && listOfInterests !== null && users[u].status === "online")
+            matches.push(users[u]);
+    }
+    
         
 //rooms - Achelia
 //results - Achelia
