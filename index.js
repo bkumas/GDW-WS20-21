@@ -3,7 +3,7 @@ const app = express();
 app.use(express.json());
 const Joi = require('joi');
 let fs = require('fs');
-
+app.get( '/' , (req, res) => {  res.send("Welcome to Speakfellow")});
 //users - Esra
 
 app.get('/users', (req, res) => {
