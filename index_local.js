@@ -2,8 +2,10 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 const Joi = require('joi');
-//read jsons
 let fs = require('fs');
+
+//timer for voice recognition
+const time = 10000; //10 secs
 
 //users
 app.get('/users', (req, res) => {
@@ -233,7 +235,6 @@ app.get('/rooms/:id', (req, res) => {
     const {vr} = require('voice-recognition');
     const recognizer = new vr('en-US');
     recognizer.listen();
-    const time = 10000;
     console.log("Your mission started, you can talk.")
 
     let words_input = [];
