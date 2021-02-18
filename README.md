@@ -10,6 +10,17 @@ Web Service, written in Node.js for finding a second level common interests betw
 #### !Note!
 
 Voice Recognition is not implemented in the deployed version, but another version with that implementation exists in index_local.js file and can be run on your computer.
+The difference exist in Post fucntion for results.
+
+#### index.js
+
+- POST 'results/' + JSON-Body { "id" : "??", "words_input" : [ "??", "??", "??"....]}
+
+#### index_local.js 
+
+- Voice recognition starts when you enter the room GET '/rooms/:id' and ends after 10 seconds. You can change that when you change the time variable at the beginning of the code.
+- When you make POST 'results/' + JSON-Body {"id" : "??"} you don't need the words_input, because they are passed from the room to your result id.
+
 
 #### Build
 
