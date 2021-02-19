@@ -14,7 +14,7 @@ The difference exist in Post fucntion for results.
 
 #### index.js
 
-- POST 'results/' + JSON-Body { "id" : "??", "words_input": ["??", "??", "??"....]}
+- POST 'results/' + JSON-Body { "id": "??", "words_input": ["??", "??", "??"....]}
 
 #### index_local.js 
 
@@ -24,7 +24,7 @@ The difference exist in Post fucntion for results.
 
 #### Build
 
-The actual version is 1.0.0 and is dependent from the following APIs - datamuse : "^1.0.5", express : "^4.17.1", joi : "^17.4.0", and voice-recognition : "^1.0.6".
+The actual version is 1.0.0 and is dependent from the following APIs - datamuse: "^1.0.5", express: "^4.17.1", joi: "^17.4.0", and voice-recognition: "^1.0.6".
 
 Deployed in Heroku
 
