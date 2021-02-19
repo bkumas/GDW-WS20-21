@@ -14,7 +14,7 @@ The difference exist in Post fucntion for results.
 
 #### index.js
 
-- POST 'results/' + JSON-Body { "id" : "??", "words_input" : [ "??", "??", "??"....]}
+- POST 'results/' + JSON-Body { "id" : "??", "words_input": ["??", "??", "??"....]}
 
 #### index_local.js 
 
@@ -28,17 +28,17 @@ The actual version is 1.0.0 and is dependent from the following APIs - datamuse 
 
 Deployed in Heroku
 
-URL : https://speakfellow.herokuapp.com/
+URL: https://speakfellow.herokuapp.com/
 
 - uses JSON files for request and response data types
 
-Main Ressources : Users , Missions , Rooms , Results
+Main Ressources: Users, Missions, Rooms, Results
 
 #### Link für Postman Team
  
 URL : https://identity.getpostman.com/login?cta=join-team&invite_code=d8c5e89cbdc3d96ea02b3bdeeef161ee&ws=0b607633-a0ba-45fd-8860-699d40dadf26&continue=https%3A%2F%2Fapp.getpostman.com%2Fweb-invite-accept%3Finvite_code%3Dd8c5e89cbdc3d96ea02b3bdeeef161ee%26ws%3D0b607633-a0ba-45fd-8860-699d40dadf26
 
-- Hier sind unsere Requests definiert. Sie können sie zum Testen verwenden 
+- Hier sind unsere Requests definiert. Sie können sie zum Testen verwenden! 
 
 ## How to
 
