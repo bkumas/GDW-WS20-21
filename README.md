@@ -38,7 +38,7 @@ Main Ressources : Users , Missions , Rooms , Results
  
 URL : https://identity.getpostman.com/login?cta=join-team&invite_code=d8c5e89cbdc3d96ea02b3bdeeef161ee&ws=0b607633-a0ba-45fd-8860-699d40dadf26&continue=https%3A%2F%2Fapp.getpostman.com%2Fweb-invite-accept%3Finvite_code%3Dd8c5e89cbdc3d96ea02b3bdeeef161ee%26ws%3D0b607633-a0ba-45fd-8860-699d40dadf26
 
-- Hier sind unsere REquests definiert. Sie können sie zum Testen verwenden 
+- Hier sind unsere Requests definiert. Sie können sie zum Testen verwenden 
 
 ## How to
 
